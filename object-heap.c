@@ -24,6 +24,12 @@ static void r_object_heap_block_init(RObjectHeapBlock *block, unsigned int size)
 static void r_object_heap_block_deinit(RObjectHeapBlock *block);
 
 
+void
+r_object_heap_init()
+{
+    /* ... */
+}
+
 RObjectHeap *
 r_object_heap_new()
 {
@@ -71,10 +77,29 @@ r_object_heap_dealloc(RObjectHeap *heap, VALUE object, RObjectHeapBlock *block)
     heap->freelist = (RVALUE *) object;
 }
 
-void   r_object_heap_mark(RObjectHeap *heap, RVALUE object);
-void   r_object_heap_unmark(RObjectHeap *heap, RVALUE object);
-void   r_object_heap_mark_with_block(RObjectHeap *heap, RVALUE object, RObjectHeapBlock *block);
-void   r_object_heap_unmark_with_block(RObjectHeap *heap, RVALUE object, RObjectHeapBlock *block);
+void
+r_object_heap_mark(RObjectHeap *heap, RVALUE object)
+{
+    RANY(object)->as.basic.flags |= FL_MARK;
+}
+
+void
+r_object_heap_unmark(RObjectHeap *heap, RVALUE object)
+{
+    RANY(object)->as.basic.flags &= ~FL_MARK;
+}
+
+void
+r_object_heap_mark_with_block(RObjectHeap *heap, RVALUE object, RObjectHeapBlock *block)
+{
+    RANY(object)->as.basic.flags |= FL_MARK;
+}
+
+void
+r_object_heap_unmark_with_block(RObjectHeap *heap, RVALUE object, RObjectHeapBlock *block)
+{
+    RANY(object)->as.basic.flags &= ~FL_MARK;
+}
 
 
 static void

@@ -36,6 +36,7 @@ typedef struct RObjectHeap RObjectHeap;
 typedef struct RObjectHeapBlock RObjectHeapBlock;
 typedef struct RObjectHeapIterator RObjectHeapIterator;
 
+void   r_object_heap_init();
 RObjectHeap *r_object_heap_new();
 void   r_object_heap_free(RObjectHeap *heap);
 
